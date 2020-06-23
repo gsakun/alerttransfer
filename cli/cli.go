@@ -2,13 +2,14 @@ package cli
 
 import (
 	"fmt"
-	log "github.com/Sirupsen/logrus"
-	"github.com/parsekafka/config"
-	"github.com/parsekafka/db"
-	"github.com/parsekafka/parsedata"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/gsakun/alerttransfer/config"
+	"github.com/gsakun/alerttransfer/db"
+	"github.com/gsakun/alerttransfer/parsedata"
+	log "github.com/sirupsen/logrus"
 )
 
 var kafkainfo config.KafkaConfig
@@ -33,7 +34,7 @@ func Run() {
 		if err != nil {
 			log.Errorln(err)
 		}
-		db.Init(kafkainfo.Database, kafkainfo.MaxIdle,kafkainfo.MaxOpen)
+		db.Init(kafkainfo.Database, kafkainfo.MaxIdle, kafkainfo.MaxOpen)
 		parsedata.Parsedata(kafkainfo.Topic, kafkainfo.Ips)
 		sigs := make(chan os.Signal, 1)
 		signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
@@ -53,6 +54,6 @@ func Run() {
 	}
 }
 func help() {
-	var helpString = `Usage: parsekafka  -c config.yaml`
+	var helpString = `Usage: alerttransfer  -c config.yaml`
 	log.Println(helpString)
 }

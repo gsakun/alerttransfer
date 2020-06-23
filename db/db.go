@@ -3,9 +3,9 @@ package db
 import (
 	"database/sql"
 	"fmt"
-	log "github.com/Sirupsen/logrus"
-	_ "github.com/go-sql-driver/mysql"
-	"github.com/parsekafka/datatype"
+
+	"github.com/gsakun/alerttransfer/datatype"
+	log "github.com/sirupsen/logrus"
 )
 
 var DB *sql.DB

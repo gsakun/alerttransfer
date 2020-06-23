@@ -1,14 +1,15 @@
 package main
 
 import (
-	log "github.com/Sirupsen/logrus"
-	"github.com/parsekafka/cli"
 	"io"
 	"os"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/gsakun/alerttransfer/cli"
+	log "github.com/sirupsen/logrus"
 )
 
 func main() {
-	logFilename := "/tmp/parsekafka.log"
+	logFilename := "/tmp/alerttransfer.log"
 	logFile, _ := os.OpenFile(logFilename, os.O_CREATE|os.O_RDWR|os.O_APPEND, 0666)
 	defer logFile.Close()
 
@@ -20,6 +21,6 @@ func main() {
 
 	log.SetOutput(fileAndStdoutWriter)
 	log.SetLevel(log.DebugLevel)
-	log.Infoln("main.main():Start ParseKafka Main")
+	log.Infoln("main.main():Start alerttransfer Main")
 	cli.Run()
 }

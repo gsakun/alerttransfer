@@ -2,15 +2,16 @@ package parsedata
 
 import (
 	"fmt"
-	"github.com/Shopify/sarama"
-	logf "github.com/Sirupsen/logrus"
-	"github.com/parsekafka/datatype"
-	"github.com/parsekafka/db"
-	"github.com/tidwall/gjson"
 	"log"
 	"os"
 	"strings"
 	"sync"
+
+	"github.com/Shopify/sarama"
+	"github.com/gsakun/alerttransfer/datatype"
+	"github.com/gsakun/alerttransfer/db"
+	logf "github.com/sirupsen/logrus"
+	"github.com/tidwall/gjson"
 )
 
 var (

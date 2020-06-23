@@ -1,9 +1,10 @@
 package config
 
 import (
-	log "github.com/Sirupsen/logrus"
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
+
+	log "github.com/sirupsen/logrus"
+	"gopkg.in/yaml.v2"
 )
 
 type KafkaConfig struct {
