@@ -1,6 +1,6 @@
-topic: packetbeat
+topic: falco-pod
 ips:
-  - Ip: 192.168.11.52:9092
+  - 10.10.111.145:32484
 database: root:123456@tcp(127.0.0.1:3306)/falcon_portal?loc=Local&parseTime=true
 maxidle: 100
 maxopen: 100
