@@ -32,18 +32,18 @@ func (data *AlarmData) Handler(db *sql.DB) error {
 		}
 	}
 	if id == 0 {
-		stmt, err := db.Prepare(`INSERT alarm(pod_name,pod_cluster,pod_namespace,pod_alarm_rule,pod_alarm_content,pod_alarm_codition,pod_alarm_time,pod_alarm_desc,pod_alarm_prority,pod_alarm_count) values(?,?,?,?,?,?,?,?,?,?)`)
+		stmt, err := db.Prepare(`INSERT alarm(pod_name,pod_cluster,pod_namespace,pod_alarm_rule,pod_alarm_content,pod_alarm_condition,pod_alarm_time,pod_alarm_desc,pod_alarm_prority,pod_alarm_count) values(?,?,?,?,?,?,?,?,?,?)`)
 		if err != nil {
 			log.Errorf("Insert prepare err %s-%s-%s-%s %v", data.PodCluster, data.PodName, data.PodNamespace, data.PodAlarmRule, err)
 			return err
 		}
+		_, err = stmt.Exec(data.PodName, data.PodCluster, data.PodNamespace, data.PodAlarmRule, data.PodAlarmContent, data.PodAlarmCondition, data.PodAlarmTime, data.PodAlarmDesc, data.PodAlarmPrority, 1)
 		if err != nil {
-			_, err = stmt.Exec(data.PodName, data.PodCluster, data.PodNamespace, data.PodAlarmRule, data.PodAlarmContent, data.PodAlarmCondition, data.PodAlarmTime, data.PodAlarmDesc, data.PodAlarmPrority, 1)
 			log.Errorf("Insert exec err %s-%s-%s-%s %v", data.PodCluster, data.PodName, data.PodNamespace, data.PodAlarmRule, err)
 			return err
 		}
 	} else {
-		stmt, err := db.Prepare(`UPDATE alarm set pod_alarm_content=?,pod_alarm_codition=?,pod_alarm_time=?,pod_alarm_desc,pod_alarm_prority,pod_alarm_count=pod_alarm_count+1 where id=?`)
+		stmt, err := db.Prepare(`UPDATE alarm set pod_alarm_content=?,pod_alarm_condition=?,pod_alarm_time=?,pod_alarm_desc,pod_alarm_prority,pod_alarm_count=pod_alarm_count+1 where id=?`)
 		if err != nil {
 			log.Errorf("Update prepare err %s-%s-%s-%s %v", data.PodCluster, data.PodName, data.PodNamespace, data.PodAlarmRule, err)
 			return err

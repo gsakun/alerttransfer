@@ -20,4 +20,5 @@ func Init(database string, maxidle, maxopen int) {
 	if err != nil {
 		log.Fatalln("ping db fail:", err)
 	}
+	log.Infoln("DB INIT SUCCESS")
 }

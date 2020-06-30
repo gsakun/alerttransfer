@@ -1,6 +1,6 @@
 topic: falco-pod
 ips:
   - 10.10.111.145:32484
-database: root:123456@tcp(127.0.0.1:3306)/falcon_portal?loc=Local&parseTime=true
+database: root:123456@tcp(10.10.110.44:3306)/container_security?loc=Local&parseTime=true
 maxidle: 100
 maxopen: 100

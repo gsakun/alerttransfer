@@ -67,17 +67,19 @@ func handler(message string) {
 		return
 		//return fmt.Errorf("Regexp failed info %s", output)
 	}
-	outputfields := gjson.Get(logfield, "output_fields").String()
-	alert.PodName = gjson.Get(outputfields, "k8s.pod.name").String()
-	alert.PodNamespace = gjson.Get(outputfields, "k8s.ns.name").String()
+	outputfields := gjson.Get(logfield, "output_fields").Map()
+	alert.PodName = outputfields["k8s.pod.name"].String()
+	alert.PodNamespace = outputfields["k8s.ns.name"].String()
 	alert.PodAlarmRule = gjson.Get(logfield, "rule").String()
-	alert.PodAlarmTime = time.Unix(int64(int64(gjson.Get(outputfields, "evt.time").Int())/1e9), 0).Format("2006-01-02 15:04:05")
+	cstSh, _ := time.LoadLocation("Asia/Shanghai")
+	alert.PodAlarmTime = gjson.Get(logfield, "time").Time().Local().In(cstSh).Format("2006-01-02 15:04:05")
 	alert.PodAlarmPrority = params[2]
 	alert.PodCluster = params[3]
 	alert.PodAlarmContent = params[4]
 	alert.PodAlarmCondition = params[5]
 	alert.PodAlarmDesc = params[6]
 	err := alert.Handler(db.DB)
+
 	if err != nil {
 		log.Errorf("Handler failed errinfo %v", err)
 		//return err
