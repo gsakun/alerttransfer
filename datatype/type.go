@@ -43,7 +43,7 @@ func (data *AlarmData) Handler(db *sql.DB) error {
 			return err
 		}
 	} else {
-		stmt, err := db.Prepare(`UPDATE alarm set pod_alarm_content=?,pod_alarm_condition=?,pod_alarm_time=?,pod_alarm_desc,pod_alarm_prority,pod_alarm_count=pod_alarm_count+1 where id=?`)
+		stmt, err := db.Prepare(`UPDATE alarm set pod_alarm_content=?,pod_alarm_condition=?,pod_alarm_time=?,pod_alarm_desc=?,pod_alarm_prority=?,pod_alarm_count=pod_alarm_count+1 where id=?`)
 		if err != nil {
 			log.Errorf("Update prepare err %s-%s-%s-%s %v", data.PodCluster, data.PodName, data.PodNamespace, data.PodAlarmRule, err)
 			return err
