@@ -39,7 +39,7 @@ func Parsedata(topic string, ips []string) {
 		go func(sarama.PartitionConsumer) {
 			defer wg.Done()
 			for msg := range pc.Messages() {
-				log.Infof("Partition:%d, Offset:%d, Key:%s, Value:%s", msg.Partition, msg.Offset, string(msg.Key), string(msg.Value))
+				log.Debugf("Partition:%d, Offset:%d, Key:%s, Value:%s", msg.Partition, msg.Offset, string(msg.Key), string(msg.Value))
 				handler(string(msg.Value))
 			}
 		}(pc)
@@ -54,7 +54,8 @@ func Parsedata(topic string, ips []string) {
 func handler(message string) {
 	var alert datatype.AlarmData
 	logfield := gjson.Get(message, "log").String()
-	re := regexp.MustCompile(`(^\d{2}:\d{2}:\d{2}.\d{9}): ([a-zA-Z]+) cluster=(\w+) ; content=(.*) ; condition=(.*) ; desc=(.*) ; tags=(.*) ; (.*)`)
+	//re := regexp.MustCompile(`(^\d{2}:\d{2}:\d{2}.\d{9}): ([a-zA-Z]+) cluster=(\w+) ; content=(.*) ; condition=(.*) ; desc=(.*) ; tags=(.*) ; (.*)`)
+	re := regexp.MustCompile(`(^\d{2}:\d{2}:\d{2}.\d{9}): ([a-zA-Z]+) cluster=(\w+) content=(.*) condition=(.*) desc=(.*) (.*)`)
 	output := gjson.Get(logfield, "output").String()
 	if !re.MatchString(output) {
 		log.Errorf("Regexp failed info %s", output)

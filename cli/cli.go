@@ -54,6 +54,6 @@ func Run() {
 	}
 }
 func help() {
-	var helpString = `Usage: alerttransfer  -c config.yaml`
+	var helpString = `Usage: alerttransfer -c config.yaml`
 	log.Println(helpString)
 }
