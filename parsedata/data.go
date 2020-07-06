@@ -55,7 +55,7 @@ func handler(message string) {
 	var alert datatype.AlarmData
 	logfield := gjson.Get(message, "log").String()
 	//re := regexp.MustCompile(`(^\d{2}:\d{2}:\d{2}.\d{9}): ([a-zA-Z]+) cluster=(\w+) ; content=(.*) ; condition=(.*) ; desc=(.*) ; tags=(.*) ; (.*)`)
-	re := regexp.MustCompile(`(^\d{2}:\d{2}:\d{2}.\d{9}): ([a-zA-Z]+) cluster=(\w+) content=(.*) condition=(.*) desc=(.*) (.*)`)
+	re := regexp.MustCompile(`(^\d{2}:\d{2}:\d{2}.\d{9}): ([a-zA-Z]+) cluster=(\w+) content=(.*) condition=(.*) desc=(.*) tags=(.*) pod_name=(.*) (.*)`)
 	output := gjson.Get(logfield, "output").String()
 	if !re.MatchString(output) {
 		log.Errorf("Regexp failed info %s", output)
@@ -63,7 +63,7 @@ func handler(message string) {
 		//return fmt.Errorf("Regexp failed info %s", output)
 	}
 	params := re.FindStringSubmatch(output)
-	if len(params) != 9 {
+	if len(params) != 10 {
 		log.Errorf("Regexp failed info %s", output)
 		return
 		//return fmt.Errorf("Regexp failed info %s", output)
