@@ -64,7 +64,7 @@ func handler(message string) {
 	}
 	params := re.FindStringSubmatch(output)
 	if len(params) != 10 {
-		log.Errorf("Regexp failed info %s", output)
+		log.Errorf("Param num incorrectness")
 		return
 		//return fmt.Errorf("Regexp failed info %s", output)
 	}
